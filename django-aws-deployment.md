@@ -88,3 +88,10 @@ Add these inside:
     sudo systemctl restart nginx
     sudo ufw delete allow 8000
     sudo ufw allow 'Nginx Full'
+
+
+
+
+Check Nginx Error logs:
+
+  cat  /var/log/nginx/nginx_error.log
