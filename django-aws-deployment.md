@@ -81,3 +81,10 @@ Add these inside:
 
     sudo journalctl -u gunicorn
     sudo systemctl daemon-reload
+    sudo systemctl restart gunicorn
+    sudo nano /etc/nginx/sites-available/myproject
+    sudo ln -s /etc/nginx/sites-available/myproject /etc/nginx/sites-enabled
+    sudo nginx -t
+    sudo systemctl restart nginx
+    sudo ufw delete allow 8000
+    sudo ufw allow 'Nginx Full'
