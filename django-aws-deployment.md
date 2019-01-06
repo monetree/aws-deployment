@@ -83,6 +83,23 @@ Add these inside:
     sudo systemctl daemon-reload
     sudo systemctl restart gunicorn
     sudo nano /etc/nginx/sites-available/myproject
+    
+    
+            server {
+                listen 80;
+                server_name server_domain_or_IP;
+
+                location = /favicon.ico { access_log off; log_not_found off; }
+                location /static/ {
+                    root /home/sammy/myproject;
+                }
+
+                location / {
+                    include proxy_params;
+                    proxy_pass http://unix:/home/sammy/myproject/myproject.sock;
+                }
+            }
+
     sudo ln -s /etc/nginx/sites-available/myproject /etc/nginx/sites-enabled
     sudo nginx -t
     sudo systemctl restart nginx
