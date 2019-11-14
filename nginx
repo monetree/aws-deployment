@@ -1,0 +1,35 @@
+server {
+
+    listen 80;
+
+    server_name 10.4.25.39 consumerhub.fractal.ai;
+
+ 
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+
+    location /static/ {
+
+        autoindex on;
+
+        alias /home/FRACTAL/soubhagya.pradhan/rb/frontend/build/static/;
+
+    }
+
+    location /django_static/ {
+
+        autoindex on;
+
+        alias /home/FRACTAL/soubhagya.pradhan/rb/static/;
+
+    }
+
+    location / {
+
+        include proxy_params;
+
+        proxy_pass http://unix:/home/FRACTAL/soubhagya.pradhan/rb/rb.sock;
+
+    }
+
+}
