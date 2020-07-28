@@ -82,25 +82,41 @@ Add these inside:
     sudo journalctl -u gunicorn
     sudo systemctl daemon-reload
     sudo systemctl restart gunicorn
-    sudo nano /etc/nginx/sites-available/myproject
+    sudo nano /etc/nginx/sites-available/taswira
     
     
-            server {
-                listen 80;
-                server_name server_domain_or_IP;
+       server {
+            listen 8000;
+            server_name 104.155.134.205;
 
-                location = /favicon.ico { access_log off; log_not_found off; }
-                location /static/ {
-                    root /home/sammy/myproject;
-                }
-
-                location / {
-                    include proxy_params;
-                    proxy_pass http://unix:/home/sammy/myproject/myproject.sock;
-                }
+            location = /favicon.ico { access_log off; log_not_found off; }
+            location /static/ {
+                root /home/fractaluser/taswira;
             }
 
-    sudo ln -s /etc/nginx/sites-available/myproject /etc/nginx/sites-enabled
+            location / {
+                include proxy_params;
+                proxy_pass http://unix:/home/fractaluser/taswira/taswira.sock;
+            }
+        }
+            
+            
+ ## for react
+        sudo nano /etc/nginx/sites-available/taswira-frontend
+        
+                   server {
+                            listen 80;
+                            server_name demo.taswira.ai;
+                            root /home/fractaluser/taswira-frontend/build;
+                            index index.html index.htm;
+
+                           location / {
+                           try_files $uri /index.html =404;
+                           }
+                        }
+
+
+    sudo ln -s /etc/nginx/sites-available/taswira /etc/nginx/sites-enabled
     sudo nginx -t
     sudo systemctl restart nginx
     sudo ufw delete allow 8000
